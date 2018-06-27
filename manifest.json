@@ -1,0 +1,22 @@
+{
+  "name": "ImmobilienScout24Distances",
+  "version": "0.1",
+  "manifest_version": 2,
+  "description": "ImmobilienScout24 Distances",
+  "short_name": "ImmobilienScout24Distances",
+  "permissions": [
+    "storage",
+    "https://www.immobilienscout24.de/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.immobilienscout24.de/*"],
+      "run_at": "document_idle",
+      "css": ["src/inject/inject.css"],
+      "js": ["src/inject/inject.js"]
+    }
+  ],
+  "permissions": [
+    "https://maps.googleapis.com/maps/api/distancematrix/*"
+  ]
+}
