@@ -11,6 +11,12 @@ if (addressBlock.length > 0) {
 	xhr.addEventListener("load", processRequestBike);
 	xhr.open('GET', requestURL(address, destinations, "bicycling"), true);
 	xhr.send();
+
+	// query distance
+	var xhrTransit = new XMLHttpRequest();
+	xhrTransit.addEventListener("load", processRequestTransit);
+	xhrTransit.open('GET', requestURL(address, destinations, "transit"), true);
+	xhrTransit.send();
 }
 
 function processRequestBike() {
@@ -40,7 +46,7 @@ function insertDistanceInAddressBlock(response, mode) {
 		newDivDestination.appendChild(textNodeDestination);
 
 		var newDivDistance = document.createElement("div");
-		var textNodeDistance = document.createTextNode(transportModeSymbol(mode) + " " + distance + " " + duration);
+		var textNodeDistance = document.createTextNode(transportModeText(distance, duration, mode));
 		newDivDistance.appendChild(textNodeDistance);
 
 		// check if block for the destination already exists
@@ -60,12 +66,12 @@ function insertDistanceInAddressBlock(response, mode) {
 	}
 }
 
-function transportModeSymbol(mode) {
+function transportModeText(distance, duration, mode) {
 	if (mode === "bicycling") {
-		return "🚲";
+		return "🚲 " + distance + " " + duration;
 	}
 	else if (mode === "transit") {
-		return "";
+		return "🚌 " + duration;
 	}
 }
 
