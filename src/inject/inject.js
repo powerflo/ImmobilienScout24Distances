@@ -1,4 +1,5 @@
 var destinations = ["Arnulfstr. 19, 80335 München", "Richard-Reitzner-Allee 1, 85540 Haar"];
+var destinationsName = ["WTW", "eXXcellent"];
 
 // search for address on current page
 var addressBlock = document.getElementsByClassName("address-block")
@@ -6,13 +7,13 @@ var addressBlock = document.getElementsByClassName("address-block")
 if (addressBlock.length > 0) {
 	var address = addressBlock[0].innerText;
 
-	// query distance
-	var xhr = new XMLHttpRequest();
-	xhr.addEventListener("load", processRequestBike);
-	xhr.open('GET', requestURL(address, destinations, "bicycling"), true);
-	xhr.send();
+	// query distance for bicycling
+	var xhrBike = new XMLHttpRequest();
+	xhrBike.addEventListener("load", processRequestBike);
+	xhrBike.open('GET', requestURL(address, destinations, "bicycling"), true);
+	xhrBike.send();
 
-	// query distance
+	// query distance for public distance
 	var xhrTransit = new XMLHttpRequest();
 	xhrTransit.addEventListener("load", processRequestTransit);
 	xhrTransit.open('GET', requestURL(address, destinations, "transit"), true);
@@ -33,16 +34,15 @@ function processRequestTransit() {
 }
 
 function insertDistanceInAddressBlock(response, mode) {
-
+	// loop through every destination
 	for (var l = 0; l < response.rows[0].elements.length; ++l) {
-		var destination = response.destination_addresses[l];
+		var destinationAddress = response.destination_addresses[l];
+		var destinationName = destinationsName[l];
 	    var distance = response.rows[0].elements[l].distance.text;
 	    var duration = response.rows[0].elements[l].duration.text;
 
-	    var text = destination + " " + distance + " " + duration;
-
 		var newDivDestination = document.createElement("div");
-		var textNodeDestination = document.createTextNode(destination);
+		var textNodeDestination = document.createTextNode(destinationName);
 		newDivDestination.appendChild(textNodeDestination);
 
 		var newDivDistance = document.createElement("div");
@@ -78,6 +78,9 @@ function transportModeText(distance, duration, mode) {
 function requestURL(origin, destinations, mode) {
 	// origin, destination: addess
 	// mode: bicycling or transit
+
+	// TODO: specify departure time
+
 	const apiKey = "AIzaSyAWX9chkt6F6w4aoNqgWdPsINgaiuhIX_k";
 	var requestURL = "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&mode=" + mode + "&origins=" + origin + "&destinations=" + destinationsToString(destinations) + "&key=" + apiKey;
 	console.log(requestURL);
