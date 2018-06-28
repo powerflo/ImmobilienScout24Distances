@@ -39,15 +39,8 @@ function insertDistanceInAddressBlock(response, mode) {
 		var textNodeDestination = document.createTextNode(destination);
 		newDivDestination.appendChild(textNodeDestination);
 
-		var symbol;
-		if (mode === "bicycling") {
-			symbol = "🚲";
-		}
-		else if (mode === "transit") {
-			symbol = "";
-		}
 		var newDivDistance = document.createElement("div");
-		var textNodeDistance = document.createTextNode(symbol + " " + distance + " " + duration);
+		var textNodeDistance = document.createTextNode(transportModeSymbol(mode) + " " + distance + " " + duration);
 		newDivDistance.appendChild(textNodeDistance);
 
 		// check if block for the destination already exists
@@ -64,6 +57,15 @@ function insertDistanceInAddressBlock(response, mode) {
 		else {
 			destinationDiv.appendChild(newDivDistance);
 		}
+	}
+}
+
+function transportModeSymbol(mode) {
+	if (mode === "bicycling") {
+		return "🚲";
+	}
+	else if (mode === "transit") {
+		return "";
 	}
 }
 
