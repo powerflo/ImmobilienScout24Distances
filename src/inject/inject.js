@@ -82,7 +82,9 @@ function requestURL(origin, destinations, mode) {
 	// TODO: specify departure time
 
 	const apiKey = "AIzaSyAWX9chkt6F6w4aoNqgWdPsINgaiuhIX_k";
-	var requestURL = "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&mode=" + mode + "&origins=" + origin + "&destinations=" + destinationsToString(destinations) + "&key=" + apiKey;
+	//var departureTime = 1530172800; // seconds since midnight, January 1, 1970 UTC
+	var departureTime = "now";
+	var requestURL = "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&mode=" + mode + "&departure_time=" + departureTime.toString() + "&origins=" + origin + "&destinations=" + destinationsToString(destinations) + "&key=" + apiKey;
 	console.log(requestURL);
 	return requestURL;
 }
