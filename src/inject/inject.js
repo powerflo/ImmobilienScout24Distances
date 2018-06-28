@@ -8,22 +8,25 @@ if (addressBlock.length > 0) {
 
 	// query distance
 	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = processRequest;
+	xhr.addEventListener("load", processRequest);
 	xhr.open('GET', "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=AIzaSyAWX9chkt6F6w4aoNqgWdPsINgaiuhIX_k", true);
 	xhr.send();
 }
 
-function processRequest(e) {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-        var response = JSON.parse(xhr.responseText);
+function processRequest() {
+    var response = JSON.parse(this.responseText);
 
-        var destination = response.destination_addresses[0];
-        var distance = response.rows[0].elements[0].distance.text;
+    var destination = response.destination_addresses[0];
+    var distance = response.rows[0].elements[0].distance.text;
 
-        // insert distances on page
-		var newElement = document.createElement("div");
-		var text = document.createTextNode(destination + ": " + distance);
-		newElement.appendChild(text);
-		addressBlock[0].appendChild(newElement);
-    }
+    // insert distances on page
+	var text = destination + ": " + distance;
+	insertDistanceInAddressBlock(text);
+}
+
+function insertDistanceInAddressBlock(text) {
+	var textNode = document.createTextNode(text);
+	var newElement = document.createElement("div");
+	newElement.appendChild(textNode);
+	addressBlock[0].appendChild(newElement);
 }
