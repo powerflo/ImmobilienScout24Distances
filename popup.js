@@ -58,7 +58,7 @@ function buildAddressList(result) {
 }
 
 function addDestination() {
-	addDestinationToList("","");
+	addDestinationToList(true, "","");
 }
 
 function saveDestinations() {
