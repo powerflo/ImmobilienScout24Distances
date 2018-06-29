@@ -1,0 +1,8 @@
+.resultlist-destination, .resultlist-distance {
+	margin-right: 1em;
+}
+
+.expose-destination, .expose-distance {
+	margin-right: 1em;
+	display: block;
+}

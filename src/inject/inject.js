@@ -3,65 +3,98 @@ var destinationsName = ["WTW", "eXXcellent"];
 
 // search for address on current page
 var addressBlock = document.getElementsByClassName("address-block")
+var resultListEntryAddress = document.getElementsByClassName("result-list-entry__address");
 
+var origins = [];
+var page;
 if (addressBlock.length > 0) {
-	var address = addressBlock[0].innerText;
+	extractAddressesFromHTMLCollection(addressBlock);
+	setIdInHTMLCollection(addressBlock);
+	page = "expose";
+}
+else if (resultListEntryAddress.length > 0) {
+	extractAddressesFromHTMLCollection(resultListEntryAddress);
+	setIdInHTMLCollection(resultListEntryAddress);
+	page = "resultlist";
+}
 
+if (origins.length > 0) {
 	// query distance for bicycling
 	var xhrBike = new XMLHttpRequest();
 	xhrBike.addEventListener("load", processRequestBike);
-	xhrBike.open('GET', requestURL(address, destinations, "bicycling"), true);
+	xhrBike.open('GET', requestURL(origins, destinations, "bicycling"), true);
 	xhrBike.send();
 
 	// query distance for public distance
 	var xhrTransit = new XMLHttpRequest();
 	xhrTransit.addEventListener("load", processRequestTransit);
-	xhrTransit.open('GET', requestURL(address, destinations, "transit"), true);
+	xhrTransit.open('GET', requestURL(origins, destinations, "transit"), true);
 	xhrTransit.send();
+}
+
+function extractAddressesFromHTMLCollection(elements) {
+	for (let i = 0; i < elements.length; ++i) {
+		origins.push(elements[i].innerText);
+	}
+}
+
+function setIdInHTMLCollection(elements) {
+	for (let i = 0; i < elements.length; ++i) {
+		elements[i].id = "origin" + i.toString();
+	}
 }
 
 function processRequestBike() {
     var response = JSON.parse(this.responseText);	
 
-	insertDistanceInAddressBlock(response, "bicycling");
+	insertDistanceInDocument(response, "bicycling");
 }
 
 function processRequestTransit() {
     var response = JSON.parse(this.responseText);	
 
     // insert distances on page
-	insertDistanceInAddressBlock(response, "transit");
+	insertDistanceInDocument(response, "transit");
 }
 
-function insertDistanceInAddressBlock(response, mode) {
-	// loop through every destination
-	for (var l = 0; l < response.rows[0].elements.length; ++l) {
-		var destinationAddress = response.destination_addresses[l];
-		var destinationName = destinationsName[l];
-	    var distance = response.rows[0].elements[l].distance.text;
-	    var duration = response.rows[0].elements[l].duration.text;
+function insertDistanceInDocument(response, mode) {
+	for (let i = 0; i < response.rows.length; ++i) {
+		
+		var originId = "origin" + i.toString();
+		// loop through every destination
+		for (let l = 0; l < response.rows[i].elements.length; ++l) {
+			
+			var destinationAddress = response.destination_addresses[l];
+			var destinationName = destinationsName[l];
+		    var distance = response.rows[i].elements[l].distance.text;
+		    var duration = response.rows[i].elements[l].duration.text;
 
-		var newDivDestination = document.createElement("div");
-		var textNodeDestination = document.createTextNode(destinationName);
-		newDivDestination.appendChild(textNodeDestination);
+			var newDivDistance = document.createElement("span");
+			newDivDistance.className = page + "-distance";
+			var textNodeDistance = document.createTextNode(transportModeText(distance, duration, mode));
+			newDivDistance.appendChild(textNodeDistance);
 
-		var newDivDistance = document.createElement("div");
-		var textNodeDistance = document.createTextNode(transportModeText(distance, duration, mode));
-		newDivDistance.appendChild(textNodeDistance);
+			// check if block for the destination already exists
+			var destinationId = originId + "destination" + l.toString();
+			var destinationDiv = document.getElementById(destinationId);
 
-		// check if block for the destination already exists
-		var destinationId = "destination" + l.toString();
-		var destinationDiv = document.getElementById(destinationId);
+			if (destinationDiv === null) {
+				var newDivDestination = document.createElement("span");
+				newDivDestination.className = page + "-destination";
+				var textNodeDestination = document.createTextNode(destinationName);
+				newDivDestination.appendChild(textNodeDestination);
 
-		if (destinationDiv === null) {
-			var newDiv = document.createElement("div");
-			newDiv.id = destinationId;
-			newDiv.appendChild(newDivDestination);
-			newDiv.appendChild(newDivDistance);
-			addressBlock[0].appendChild(newDiv);
-		}
-		else {
-			destinationDiv.appendChild(newDivDistance);
+				var newDiv = document.createElement("div");
+				newDiv.id = destinationId;
+				newDiv.appendChild(newDivDestination);
+				newDiv.appendChild(newDivDistance);
+
+				var addressBlock = document.getElementById(originId);
+				addressBlock.appendChild(newDiv);
+			}
+			else {
+				destinationDiv.appendChild(newDivDistance);
+			}
 		}
 	}
 }
@@ -75,8 +108,8 @@ function transportModeText(distance, duration, mode) {
 	}
 }
 
-function requestURL(origin, destinations, mode) {
-	// origin, destinations: addresses as array
+function requestURL(origins, destinations, mode) {
+	// origins, destinations: addresses as string array
 	// mode: bicycling or transit
 
 	const apiKey = "AIzaSyAWX9chkt6F6w4aoNqgWdPsINgaiuhIX_k";
@@ -85,22 +118,22 @@ function requestURL(origin, destinations, mode) {
 	if (mode === "transit") {
 		requestURL += "&departure_time=" + today8amInSeconds().toString();
 	}
-	requestURL += "&origins=" + origin + "&destinations=" + destinationsToString(destinations) + "&key=" + apiKey;
+	requestURL += "&origins=" + addressesToString(origins) + "&destinations=" + addressesToString(destinations) + "&key=" + apiKey;
 
 	console.log(requestURL);
 	return requestURL;
 }
 
-function destinationsToString(destinations) {
-	var destinationsString;
-	if (destinations.length > 0) {
-		destinationsString = destinations[0];
+function addressesToString(addresses) {
+	var addressString;
+	if (addresses.length > 0) {
+		addressString = addresses[0];
 
-		for (var l = 1; l < destinations.length; ++l) {
-			destinationsString += "|" + destinations[l];
+		for (var l = 1; l < addresses.length; ++l) {
+			addressString += "|" + addresses[l];
 		}
 	}
-	return destinationsString;
+	return addressString;
 }
 
 function today8amInSeconds() {
