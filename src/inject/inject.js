@@ -1,41 +1,48 @@
 var destinations = ["Arnulfstr. 19, 80335 München", "Richard-Reitzner-Allee 1, 85540 Haar"];
 var destinationsName = ["WTW", "eXXcellent"];
-
-// search for address on current page
-var addressBlock = document.getElementsByClassName("address-block")
-var resultListEntryAddress = document.getElementsByClassName("result-list-entry__address");
-
-var origins = [];
 var page;
-if (addressBlock.length > 0) {
-	extractAddressesFromHTMLCollection(addressBlock);
-	setIdInHTMLCollection(addressBlock);
-	page = "expose";
-}
-else if (resultListEntryAddress.length > 0) {
-	extractAddressesFromHTMLCollection(resultListEntryAddress);
-	setIdInHTMLCollection(resultListEntryAddress);
-	page = "resultlist";
-}
 
-if (origins.length > 0) {
-	// query distance for bicycling
-	var xhrBike = new XMLHttpRequest();
-	xhrBike.addEventListener("load", processRequestBike);
-	xhrBike.open('GET', requestURL(origins, destinations, "bicycling"), true);
-	xhrBike.send();
+init();
 
-	// query distance for public distance
-	var xhrTransit = new XMLHttpRequest();
-	xhrTransit.addEventListener("load", processRequestTransit);
-	xhrTransit.open('GET', requestURL(origins, destinations, "transit"), true);
-	xhrTransit.send();
+function init() {
+	// search for address on current page
+	var addressBlock = document.getElementsByClassName("address-block")
+	var resultListEntryAddress = document.getElementsByClassName("result-list-entry__address");
+
+	var origins;
+	
+	if (addressBlock.length > 0) {
+		origins = extractAddressesFromHTMLCollection(addressBlock);
+		setIdInHTMLCollection(addressBlock);
+		page = "expose";
+	}
+	else if (resultListEntryAddress.length > 0) {
+		origins = extractAddressesFromHTMLCollection(resultListEntryAddress);
+		setIdInHTMLCollection(resultListEntryAddress);
+		page = "resultlist";
+	}
+
+	if (origins.length > 0) {
+		// query distance for bicycling
+		var xhrBike = new XMLHttpRequest();
+		xhrBike.addEventListener("load", processRequestBike);
+		xhrBike.open('GET', requestURL(origins, destinations, "bicycling"), true);
+		xhrBike.send();
+
+		// query distance for public distance
+		var xhrTransit = new XMLHttpRequest();
+		xhrTransit.addEventListener("load", processRequestTransit);
+		xhrTransit.open('GET', requestURL(origins, destinations, "transit"), true);
+		xhrTransit.send();
+	}
 }
 
 function extractAddressesFromHTMLCollection(elements) {
+	var origins = [];
 	for (let i = 0; i < elements.length; ++i) {
 		origins.push(elements[i].innerText);
 	}
+	return origins;
 }
 
 function setIdInHTMLCollection(elements) {
