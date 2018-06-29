@@ -2,7 +2,7 @@ body {
 	min-width: 600px;
 }
 
-.name {
+.name, .address {
 	margin-right: 0.5em;
 }
 
