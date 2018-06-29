@@ -18,19 +18,24 @@ function load() {
 }
 
 function addDestinationToList(name, address) {
-	var destination = document.createElement("li");
-	var nameField = document.createElement("span");
-	nameField.className = "name";
-	nameField.contentEditable = "true";
-	var nameText = document.createTextNode(name);
-	nameField.appendChild(nameText);
-	destination.appendChild(nameField);
-	var addressField = document.createElement("span");
-	addressField.className = "address";
-	addressField.contentEditable = "true";
-	var addressText = document.createTextNode(address);
-	addressField.appendChild(addressText);
-	destination.appendChild(addressField);
+	var destination = document.createElement("div");
+	destination.className = "destination";
+
+	var nameInput = document.createElement("INPUT");
+	nameInput.setAttribute("type", "text");
+	nameInput.value = name;
+	nameInput.placeholder = "name";
+	nameInput.className = "nameInput";
+	destination.appendChild(nameInput);
+
+	var addressInput = document.createElement("INPUT");
+	addressInput.setAttribute("type", "text");
+	addressInput.value = address;
+	addressInput.placeholder = "address";
+	addressInput.className = "addressInput";
+	destination.appendChild(addressInput);
+
+
 	var button = document.createElement("button");
 	button.innerText = "remove";
 	button.className = "deleteButton";
@@ -46,20 +51,20 @@ function buildAddressList(result) {
 }
 
 function addDestination() {
-	addDestinationToList("name","address");
+	addDestinationToList("","");
 }
 
 function saveDestinations() {
-	var nameElements = document.getElementsByClassName("name");
+	var nameElements = document.getElementsByClassName("nameInput");
 	var names = [];
 	for (let i=0; i < nameElements.length; ++i) {
-		names.push(nameElements[i].innerText);
+		names.push(nameElements[i].value);
 	}
 
-	var addressElements = document.getElementsByClassName("address");
+	var addressElements = document.getElementsByClassName("addressInput");
 	var addresses = [];
 	for (let i=0; i < addressElements.length; ++i) {
-		addresses.push(addressElements[i].innerText);
+		addresses.push(addressElements[i].value);
 	}
 
     // Save it using the Chrome extension storage API.
