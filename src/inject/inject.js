@@ -38,20 +38,20 @@ function loadDestinations() {
 
 function init() {
 	if (url !== document.location.href) {
-		var addressBlock = document.getElementsByClassName("address-block")
+		var addressBlock = document.getElementsByClassName("address-block");
 		var resultListEntryAddress = document.getElementsByClassName("result-list-entry__address");
 
 		var origins;
 		
 		if (addressBlock.length > 0) {
+			page = "expose";
 			origins = extractAddressesFromHTMLCollection(addressBlock);
 			setIdInHTMLCollection(addressBlock);
-			page = "expose";
 		}
 		else if (resultListEntryAddress.length > 0) {
+			page = "resultlist";
 			origins = extractAddressesFromHTMLCollection(resultListEntryAddress);
 			setIdInHTMLCollection(resultListEntryAddress);
-			page = "resultlist";
 		}
 
 		if (origins.length > 0) {
@@ -88,7 +88,10 @@ function extractAddressesFromHTMLCollection(elements) {
 
 function setIdInHTMLCollection(elements) {
 	for (let i = 0; i < elements.length; ++i) {
-		elements[i].id = "origin" + i.toString();
+		var div = document.createElement("div");
+		div.id = "origin" + i.toString();
+		div.className = page + "-origin-block";
+		elements[i].appendChild(div);
 	}
 }
 
@@ -134,11 +137,16 @@ function insertDistanceInDocument(response, mode) {
 
 				var newDiv = document.createElement("div");
 				newDiv.id = destinationId;
-				newDiv.appendChild(newDivDestination);
+				newDiv.className = page + "-distance-block";
 				newDiv.appendChild(newDivDistance);
 
+				var newOuterDiv = document.createElement("div");
+				newOuterDiv.className = page + "-destination-block";
+				newOuterDiv.appendChild(newDivDestination);
+				newOuterDiv.appendChild(newDiv);
+
 				var addressBlock = document.getElementById(originId);
-				addressBlock.appendChild(newDiv);
+				addressBlock.appendChild(newOuterDiv);
 			}
 			else {
 				destinationDiv.appendChild(newDivDistance);

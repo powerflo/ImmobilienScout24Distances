@@ -1,8 +1,37 @@
-.resultlist-destination, .resultlist-distance {
-	margin-right: 1em;
+/*
+* expose
+*/
+.expose-destination, .expose-distance {
+	margin-right: 0.5em;
+	display: block;
 }
 
-.expose-destination, .expose-distance {
-	margin-right: 1em;
+.expose-destination-block {
+	display: table-cell;
+	margin-right: 0.5em;
+}
+
+.expose-distance-block {
+	display: block;
+}
+
+.expose-distance {
+	display: block;
+}
+
+
+/*
+* result list
+*/
+.resultlist-origin-block {
+	display: block;
+}
+
+.resultlist-destination-block {
+	display: inline-block;
+	margin-right: 0.5em;
+}
+
+.resultlist-distance {
 	display: block;
 }
