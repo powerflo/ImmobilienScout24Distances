@@ -4,43 +4,75 @@ var page;
 
 init();
 
+// Select the node that will be observed for mutations
+var targetNode = document.getElementById('resultListItems');
+if (targetNode !== null) {
+
+	// Options for the observer (which mutations to observe)
+	var config = { attributes: true, childList: true, subtree: false, characterData: true };
+
+	// Callback function to execute when mutations are observed
+	var url;
+	var callback = function(mutationsList) {
+	    for(var mutation of mutationsList) {
+	        if (mutation.type == 'childList') {
+	        	init();
+	        }
+	    }
+	};
+
+	// Create an observer instance linked to the callback function
+	var observer = new MutationObserver(callback);
+
+	// Start observing the target node for configured mutations
+	observer.observe(targetNode, config);
+}
+
+
 function init() {
-	// search for address on current page
-	var addressBlock = document.getElementsByClassName("address-block")
-	var resultListEntryAddress = document.getElementsByClassName("result-list-entry__address");
+	if (url !== document.location.href) {
+		var addressBlock = document.getElementsByClassName("address-block")
+		var resultListEntryAddress = document.getElementsByClassName("result-list-entry__address");
 
-	var origins;
-	
-	if (addressBlock.length > 0) {
-		origins = extractAddressesFromHTMLCollection(addressBlock);
-		setIdInHTMLCollection(addressBlock);
-		page = "expose";
-	}
-	else if (resultListEntryAddress.length > 0) {
-		origins = extractAddressesFromHTMLCollection(resultListEntryAddress);
-		setIdInHTMLCollection(resultListEntryAddress);
-		page = "resultlist";
-	}
+		var origins;
+		
+		if (addressBlock.length > 0) {
+			origins = extractAddressesFromHTMLCollection(addressBlock);
+			setIdInHTMLCollection(addressBlock);
+			page = "expose";
+		}
+		else if (resultListEntryAddress.length > 0) {
+			origins = extractAddressesFromHTMLCollection(resultListEntryAddress);
+			setIdInHTMLCollection(resultListEntryAddress);
+			page = "resultlist";
+		}
 
-	if (origins.length > 0) {
-		// query distance for bicycling
-		var xhrBike = new XMLHttpRequest();
-		xhrBike.addEventListener("load", processRequestBike);
-		xhrBike.open('GET', requestURL(origins, destinations, "bicycling"), true);
-		xhrBike.send();
+		if (origins.length > 0) {
+			// save the current url to do the query only once
+			url = document.location.href;
 
-		// query distance for public distance
-		var xhrTransit = new XMLHttpRequest();
-		xhrTransit.addEventListener("load", processRequestTransit);
-		xhrTransit.open('GET', requestURL(origins, destinations, "transit"), true);
-		xhrTransit.send();
+			// query distance for bicycling
+			var xhrBike = new XMLHttpRequest();
+			xhrBike.addEventListener("load", processRequestBike);
+			xhrBike.open('GET', requestURL(origins, destinations, "bicycling"), true);
+			xhrBike.send();
+
+			// query distance for public distance
+			var xhrTransit = new XMLHttpRequest();
+			xhrTransit.addEventListener("load", processRequestTransit);
+			xhrTransit.open('GET', requestURL(origins, destinations, "transit"), true);
+			xhrTransit.send();
+		}
 	}
 }
 
 function extractAddressesFromHTMLCollection(elements) {
 	var origins = [];
 	for (let i = 0; i < elements.length; ++i) {
-		origins.push(elements[i].innerText);
+		var address = elements[i].innerText;
+		if (address !== "") {
+			origins.push(elements[i].innerText);
+		}
 	}
 	return origins;
 }

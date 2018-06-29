@@ -17,6 +17,7 @@
     }
   ],
   "permissions": [
-    "https://maps.googleapis.com/maps/api/distancematrix/*"
+    "https://maps.googleapis.com/maps/api/distancematrix/*",
+    "webNavigation"
   ]
 }
