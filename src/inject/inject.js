@@ -68,19 +68,19 @@ function init() {
 
 			// query distance for bicycling
 			var xhrBike = new XMLHttpRequest();
-			xhrBike.addEventListener("load", processRequestBike);
+			xhrBike.addEventListener("load", processRequest("bicycling"));
 			xhrBike.open('GET', requestURL(origins, destinations, "bicycling"), true);
 			xhrBike.send();
 
-			// query distance for bicycling
+			//query distance for bicycling
 			var xhrDriving = new XMLHttpRequest();
-			xhrDriving.addEventListener("load", processRequestDriving);
+			xhrDriving.addEventListener("load", processRequest("driving"));
 			xhrDriving.open('GET', requestURL(origins, destinations, "driving"), true);
 			xhrDriving.send();
 
 			// query distance for public distance
 			var xhrTransit = new XMLHttpRequest();
-			xhrTransit.addEventListener("load", processRequestTransit);
+			xhrTransit.addEventListener("load", processRequest("transit"));
 			xhrTransit.open('GET', requestURL(origins, destinations, "transit"), true);
 			xhrTransit.send();
 		}
@@ -107,23 +107,11 @@ function setIdInHTMLCollection(elements) {
 	}
 }
 
-function processRequestBike() {
-    var response = JSON.parse(this.responseText);	
-
-	insertDistanceInDocument(response, "bicycling");
-}
-
-function processRequestDriving() {
-    var response = JSON.parse(this.responseText);	
-
-	insertDistanceInDocument(response, "driving");
-}
-
-function processRequestTransit() {
-    var response = JSON.parse(this.responseText);	
-
-    // insert distances on page
-	insertDistanceInDocument(response, "transit");
+function processRequest(mode) {
+	return function() {
+	    var response = JSON.parse(this.responseText);	
+		insertDistanceInDocument(response, mode);
+	}
 }
 
 function insertDistanceInDocument(response, mode) {
