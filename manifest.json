@@ -8,6 +8,9 @@
     "storage",
     "https://www.immobilienscout24.de/*"
   ],
+  "browser_action": {
+      "default_popup": "popup.html"
+    },
   "content_scripts": [
     {
       "matches": ["https://www.immobilienscout24.de/*"],
@@ -18,6 +21,7 @@
   ],
   "permissions": [
     "https://maps.googleapis.com/maps/api/distancematrix/*",
-    "webNavigation"
+    "webNavigation",
+    "storage"
   ]
 }

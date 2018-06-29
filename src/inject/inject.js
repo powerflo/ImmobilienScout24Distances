@@ -1,8 +1,8 @@
-var destinations = ["Arnulfstr. 19, 80335 München", "Richard-Reitzner-Allee 1, 85540 Haar"];
-var destinationsName = ["WTW", "eXXcellent"];
+var destinations;
+var destinationsName;
 var page;
 
-init();
+loadDestinations();
 
 // Select the node that will be observed for mutations
 var targetNode = document.getElementById('resultListItems');
@@ -16,7 +16,7 @@ if (targetNode !== null) {
 	var callback = function(mutationsList) {
 	    for(var mutation of mutationsList) {
 	        if (mutation.type == 'childList') {
-	        	init();
+	        	loadDestinations();
 	        }
 	    }
 	};
@@ -28,6 +28,13 @@ if (targetNode !== null) {
 	observer.observe(targetNode, config);
 }
 
+function loadDestinations() {
+	chrome.storage.sync.get(['names', 'destinations'], function(result) {
+      destinations = result.destinations;
+      destinationsName = result.names;
+      init();
+    });
+}
 
 function init() {
 	if (url !== document.location.href) {
@@ -50,6 +57,8 @@ function init() {
 		if (origins.length > 0) {
 			// save the current url to do the query only once
 			url = document.location.href;
+
+			loadDestinations();
 
 			// query distance for bicycling
 			var xhrBike = new XMLHttpRequest();
@@ -143,7 +152,7 @@ function transportModeText(distance, duration, mode) {
 		return "🚲 " + distance + " " + duration;
 	}
 	else if (mode === "transit") {
-		return "🚌 " + duration;
+		return "🚉 " + duration; // 🚌
 	}
 }
 
