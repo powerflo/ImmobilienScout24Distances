@@ -68,10 +68,22 @@ function saveDestinations() {
 	var names = [];
 	var addresses = [];
 	var checked = [];
+	var numberChecked = 0;
 	for (let i=0; i < nameElements.length; ++i) {
 		checked.push(checkboxElements[i].checked);
+		if (checked[i]) {
+			++numberChecked;
+		}
+		if (numberChecked > 5) {
+			checked[i] = false;
+			checkboxElements[i].checked = false;
+		}
 		names.push(nameElements[i].value);
 		addresses.push(addressElements[i].value);
+	}
+
+	if (numberChecked > 5) {
+		alert("More than 5 destinations selected");
 	}
 
     // Save it using the Chrome extension storage API.
