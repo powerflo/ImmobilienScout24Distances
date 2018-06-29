@@ -72,6 +72,12 @@ function init() {
 			xhrBike.open('GET', requestURL(origins, destinations, "bicycling"), true);
 			xhrBike.send();
 
+			// query distance for bicycling
+			var xhrDriving = new XMLHttpRequest();
+			xhrDriving.addEventListener("load", processRequestDriving);
+			xhrDriving.open('GET', requestURL(origins, destinations, "driving"), true);
+			xhrDriving.send();
+
 			// query distance for public distance
 			var xhrTransit = new XMLHttpRequest();
 			xhrTransit.addEventListener("load", processRequestTransit);
@@ -107,6 +113,12 @@ function processRequestBike() {
 	insertDistanceInDocument(response, "bicycling");
 }
 
+function processRequestDriving() {
+    var response = JSON.parse(this.responseText);	
+
+	insertDistanceInDocument(response, "driving");
+}
+
 function processRequestTransit() {
     var response = JSON.parse(this.responseText);	
 
@@ -123,12 +135,22 @@ function insertDistanceInDocument(response, mode) {
 			
 			var destinationAddress = response.destination_addresses[l];
 			var destinationName = destinationsName[l];
-		    var distance = response.rows[i].elements[l].distance.text;
-		    var duration = response.rows[i].elements[l].duration.text;
+		    var distanceText = response.rows[i].elements[l].distance.text;
+		    var distanceValue = response.rows[i].elements[l].distance.value;
+		    var durationText = response.rows[i].elements[l].duration.text;
+
+		    // no bicycling distance if distance > 50km
+		    if (mode === "bicycling" && distanceValue > 50*1000) {
+		    	continue;
+		    }
+		    // no driving distance if distance < 50km
+		    if (mode === "driving" && distanceValue < 50*1000) {
+		    	continue;
+		    }
 
 			var newDivDistance = document.createElement("span");
 			newDivDistance.className = page + "-distance";
-			var textNodeDistance = document.createTextNode(transportModeText(distance, duration, mode));
+			var textNodeDistance = document.createTextNode(transportModeText(distanceText, durationText, mode));
 			newDivDistance.appendChild(textNodeDistance);
 
 			// check if block for the destination already exists
@@ -164,6 +186,9 @@ function insertDistanceInDocument(response, mode) {
 function transportModeText(distance, duration, mode) {
 	if (mode === "bicycling") {
 		return "🚲 " + distance + " " + duration;
+	}
+	else if (mode === "driving") {
+		return "🚗 " + duration;
 	}
 	else if (mode === "transit") {
 		return "🚉 " + duration; // 🚌
