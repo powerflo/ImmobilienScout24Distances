@@ -29,9 +29,15 @@ if (targetNode !== null) {
 }
 
 function loadDestinations() {
-	chrome.storage.sync.get(['names', 'destinations'], function(result) {
-      destinations = result.destinations;
-      destinationsName = result.names;
+	chrome.storage.sync.get(['checked', 'names', 'destinations'], function(result) {
+		destinations = [];
+		destinationsName = [];
+		for (let i=0; i < result.names.length; ++i) {
+			if (result.checked[i]) { // only checked destinations
+				destinations.push(result.destinations[i]);
+				destinationsName.push(result.names[i]);
+			}
+		}
       init();
     });
 }

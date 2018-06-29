@@ -1,28 +1,61 @@
 /*
 * expose
 */
+
+/*
+.expose-origin-block {
+	display: flex;
+}
+
+.expose-destination-block {
+	display: inline-block;
+	margin-right: 0.5em;
+}
+
+.expose-destination {
+	font-size: small;
+}
+
+.expose-distance-block {
+	display: block;
+	font-size: smaller;
+}
+
 .expose-destination, .expose-distance {
 	margin-right: 0.5em;
 	display: block;
 }
 
+*/
+.expose-origin-block {
+	display: block;
+}
+
 .expose-destination-block {
-	display: table-cell;
+	display: block;
 	margin-right: 0.5em;
 }
 
+.expose-destination {
+	font-size: small;
+	display: inline;
+}
+
 .expose-distance-block {
-	display: block;
+	display: inline-block;
+	font-size: smaller;
+	float: right;
 }
 
-.expose-distance {
-	display: block;
+.expose-destination, .expose-distance {
+	margin-right: 0.5em;
+	display: inline;
 }
-
 
 /*
 * result list
 */
+/*
 .resultlist-origin-block {
 	display: block;
 }
@@ -32,6 +65,38 @@
 	margin-right: 0.5em;
 }
 
+.resultlist-destination {
+	font-size: small;
+}
+
+.resultlist-distance-block {
+	font-size: smaller;
+}
+
 .resultlist-distance {
 	display: block;
+}
+*/
+.resultlist-origin-block {
+	display: block;
+}
+
+.resultlist-destination-block {
+	display: block;
+	margin-right: 0.5em;
+}
+
+.resultlist-destination {
+	font-size: small;
+	display: inline;
+}
+
+.resultlist-distance-block {
+	font-size: smaller;
+	display: inline-block;
+	float: right;
+}
+
+.resultlist-distance {
+	display: inline;
 }
