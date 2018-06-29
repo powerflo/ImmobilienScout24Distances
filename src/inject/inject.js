@@ -72,7 +72,7 @@ function init() {
 			xhrBike.open('GET', requestURL(origins, destinations, "bicycling"), true);
 			xhrBike.send();
 
-			//query distance for bicycling
+			// query distance for driving
 			var xhrDriving = new XMLHttpRequest();
 			xhrDriving.addEventListener("load", processRequest("driving"));
 			xhrDriving.open('GET', requestURL(origins, destinations, "driving"), true);
