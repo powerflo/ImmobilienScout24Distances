@@ -14,7 +14,7 @@
     "https://www.immobilienscout24.de/*"
   ],
   "browser_action": {
-      "default_popup": "popup.html"
+      "default_popup": "src/popup/popup.html"
     },
   "content_scripts": [
     {
