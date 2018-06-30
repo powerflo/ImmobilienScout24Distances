@@ -2,8 +2,12 @@
   "name": "ImmobilienScout24Distances",
   "version": "0.1",
   "manifest_version": 2,
-  "description": "ImmobilienScout24 Distances",
+  "description": "Distances and durations for ImmobilienScout24.de",
   "short_name": "ImmobilienScout24Distances",
+  "icons": {
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "permissions": [
     "storage",
     "https://www.immobilienscout24.de/*"
