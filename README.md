@@ -21,8 +21,9 @@ and install the extension as usual.
 
 * @fanaz
 
-Feel free to open an issue or shoot us a message!
+Feel free to open an issue or write a message!
 
 ## Version History
 
 * 0.1: prototype
+* 0.2: prototype published on chrome web store
