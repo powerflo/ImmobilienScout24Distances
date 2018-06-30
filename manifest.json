@@ -2,7 +2,7 @@
   "name": "Distances for ImmobilienScout24",
   "version": "0.1",
   "manifest_version": 2,
-  "description": "Distances and durations for ImmobilienScout24.de",
+  "description": "Show distances and travel times to user-defined locations on ImmobilienScout24.de",
   "short_name": "ImmobilienScout24Distances",
   "homepage_url": "https://github.com/fanaz/ImmobilienScout24Distances",
   "icons": {
