@@ -15,9 +15,5 @@ body {
 }
 
 #address-list {
-	margin-left: auto;
-	margin-right: auto;
-	width: 90%;
-	margin-bottom: 1em;
-
+	margin: 1em;
 }
