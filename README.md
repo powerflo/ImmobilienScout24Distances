@@ -2,10 +2,12 @@
 Distances and durations for ImmobilienScout24.de.
 The extension shows the distance and duration to the locations important to you by bicycle (short distances), car (long distances) or public transport.
 
+![Screenshot](https://github.com/fanaz/ImmobilienScout24Distances/blob/master/resources/screenshot1.png)
+
 ## Installation
 
 Go to
-[Distances for ImmobilienScout24.de on the Webstore](https://chrome.google.com/webstore/detail/distances-for-immobiliens/lmmgpacnniljknifddilndhhcmejknfm) 
+["Distances for ImmobilienScout24.de" on the Webstore](https://chrome.google.com/webstore/detail/distances-for-immobiliens/lmmgpacnniljknifddilndhhcmejknfm) 
 and install the extension as usual.
 
 ## Developer Installation
