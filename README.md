@@ -5,7 +5,7 @@ The extension shows the distance and duration to the locations important to you 
 ## Installation
 
 Go to
-[Distances for ImmobilienScout24.de on the Webstore](hhttps://chrome.google.com/webstore/detail/distances-for-immobiliens/lmmgpacnniljknifddilndhhcmejknfm) 
+[Distances for ImmobilienScout24.de on the Webstore](https://chrome.google.com/webstore/detail/distances-for-immobiliens/lmmgpacnniljknifddilndhhcmejknfm) 
 and install the extension as usual.
 
 ## Developer Installation
