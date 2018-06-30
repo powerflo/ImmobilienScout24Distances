@@ -4,7 +4,7 @@ Distances and durations for ImmobilienScout24.de
 ## Installation
 
 Go to
-[Distances for ImmobilienScout24.de on the Webstore](https://chrome.google.com/webstore/detail/xxxx) 
+[Distances for ImmobilienScout24.de on the Webstore](hhttps://chrome.google.com/webstore/detail/distances-for-immobiliens/lmmgpacnniljknifddilndhhcmejknfm) 
 and install the extension as usual.
 
 ## Developer Installation
