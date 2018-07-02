@@ -1,6 +1,6 @@
 {
   "name": "Distances for ImmobilienScout24",
-  "version": "0.2",
+  "version": "0.3",
   "manifest_version": 2,
   "description": "Show distances and travel times to user-defined locations on ImmobilienScout24.de",
   "short_name": "ImmobilienScout24Distances",
