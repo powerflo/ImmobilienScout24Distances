@@ -39,6 +39,7 @@
 .expose-destination {
 	font-size: small;
 	display: inline;
+	margin-right: 1em;
 }
 
 .expose-distance-block {
@@ -47,9 +48,9 @@
 	float: right;
 }
 
-.expose-destination, .expose-distance {
-	margin-right: 0.5em;
+.expose-distance {
 	display: inline;
+	margin-right: 1em;
 }
 
 /*
@@ -89,6 +90,7 @@
 .resultlist-destination {
 	font-size: small;
 	display: inline;
+	margin-right: 1em;
 }
 
 .resultlist-distance-block {
@@ -99,4 +101,5 @@
 
 .resultlist-distance {
 	display: inline;
+	margin-right: 1em;
 }
