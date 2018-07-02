@@ -11,8 +11,9 @@ function deleteRow() {
 }
 
 function load() {
-	chrome.storage.sync.get(['checked', 'names', 'destinations'], function(result) {
-      console.log('Value currently is ' + result.names + result.destinations);
+	chrome.storage.sync.get({'checked': [], 'names': [], 'destinations': []}, function(result) {
+      console.log(result.checked);
+      console.log(result.names);
       buildAddressList(result);
     });
 }
@@ -54,6 +55,10 @@ function addDestinationToList(checked, name, address) {
 function buildAddressList(result) {
 	for (let i=0; i < result.names.length; ++i) {
 		addDestinationToList(result.checked[i], result.names[i], result.destinations[i]);
+	}
+
+	if (result.names.length === 0) {
+		addDestination();
 	}
 }
 
