@@ -1,5 +1,5 @@
 body {
-	min-width: 45em;
+	/*min-width: 45em;*/
 }
 
 .nameInput {
@@ -16,4 +16,8 @@ body {
 
 #address-list {
 	margin: 1em;
+}
+
+.destination {
+	white-space: nowrap;
 }
