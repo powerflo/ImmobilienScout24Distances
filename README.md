@@ -27,3 +27,4 @@ Feel free to open an issue or write a message!
 
 * 0.1: prototype
 * 0.2: prototype published on chrome web store
+* 0.3: Improved popup for address entry
