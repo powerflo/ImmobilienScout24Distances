@@ -13,7 +13,7 @@ and install the extension as usual.
 ## Developer Installation
 
 * `git clone https://github.com/fanaz/ImmobilienScout24Distances.git`
-* Open [chrome://extension](chrome://extension) in Chrome
+* Open [chrome://extension](chrome://extensions) in Chrome
 * Check "Developer mode" at the top right
 * Click "Load unpacked extension..." and select the extension folder you just cloned into
 
