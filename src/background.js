@@ -1,14 +1,13 @@
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        console.log(sender.tab ?
-                    "from a content script:" + sender.tab.url :
-                    "from the extension");
-    
-        console.log(request)
-        
-        fetch(request.url).then(parseJSON).then(res => sendResponse(res))
-        return true
-    });
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    console.log(sender.tab ? 'from a content script:' + sender.tab.url : 'from the extension');
+
+    console.log(request);
+
+    fetch(request.url)
+        .then(parseJSON)
+        .then(sendResponse);
+    return true;
+});
 
 // Parse JSON from response body
 async function parseJSON(response) {

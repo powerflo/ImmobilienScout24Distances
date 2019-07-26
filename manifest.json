@@ -1,33 +1,33 @@
 {
-  "name": "Distances for ImmobilienScout24",
-  "version": "0.4",
-  "manifest_version": 2,
-  "description": "Show distances and travel times to user-defined locations on ImmobilienScout24.de",
-  "short_name": "ImmobilienScout24Distances",
-  "homepage_url": "https://github.com/fanaz/ImmobilienScout24Distances",
-  "icons": {
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
-  },
-  "browser_action": {
-    "default_popup": "src/popup/popup.html"
-  },
-  "content_scripts": [
-    {
-      "matches": ["https://www.immobilienscout24.de/*"],
-      "run_at": "document_idle",
-      "css": ["src/inject/inject.css"],
-      "js": ["src/inject/inject.js"]
-    }
-  ],
-  "background": {
-    "scripts": ["src/background.js"],
-    "persistent": false
-  },
-  "permissions": [
-    "https://www.immobilienscout24.de/*",
-    "https://maps.googleapis.com/maps/api/distancematrix/*",
-    "webNavigation",
-    "storage"
-  ]
+    "name": "Distances for ImmobilienScout24",
+    "version": "0.4",
+    "manifest_version": 2,
+    "description": "Show distances and travel times to user-defined locations on ImmobilienScout24.de",
+    "short_name": "ImmobilienScout24Distances",
+    "homepage_url": "https://github.com/fanaz/ImmobilienScout24Distances",
+    "icons": {
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "browser_action": {
+        "default_popup": "src/popup/popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://www.immobilienscout24.de/*"],
+            "run_at": "document_idle",
+            "css": ["src/inject/inject.css"],
+            "js": ["src/inject/inject.js"]
+        }
+    ],
+    "background": {
+        "scripts": ["src/background.js"],
+        "persistent": false
+    },
+    "permissions": [
+        "https://www.immobilienscout24.de/*",
+        "https://maps.googleapis.com/maps/api/distancematrix/*",
+        "webNavigation",
+        "storage"
+    ]
 }
