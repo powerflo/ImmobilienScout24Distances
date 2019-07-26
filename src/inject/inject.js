@@ -38,6 +38,7 @@ function loadDestinations() {
 				destinationsName.push(result.names[i]);
 			}
 		}
+
       init();
     });
 }
@@ -59,30 +60,25 @@ function init() {
 			origins = extractAddressesFromHTMLCollection(resultListEntryAddress);
 			setIdInHTMLCollection(resultListEntryAddress);
 		}
-
+		
 		if (origins.length > 0) {
+			
 			// save the current url to do the query only once
 			url = document.location.href;
-
+			
 			loadDestinations();
+			
+			chrome.runtime.sendMessage({url: requestURL(origins, destinations, "bicycling")}, response => {
+				insertDistanceInDocument(response.json, "bicycling");
+			});
 
-			// query distance for bicycling
-			var xhrBike = new XMLHttpRequest();
-			xhrBike.addEventListener("load", processRequest("bicycling"));
-			xhrBike.open('GET', requestURL(origins, destinations, "bicycling"), true);
-			xhrBike.send();
+			chrome.runtime.sendMessage({url: requestURL(origins, destinations, "driving")}, response => {
+				insertDistanceInDocument(response.json, "driving");
+			});
 
-			// query distance for driving
-			var xhrDriving = new XMLHttpRequest();
-			xhrDriving.addEventListener("load", processRequest("driving"));
-			xhrDriving.open('GET', requestURL(origins, destinations, "driving"), true);
-			xhrDriving.send();
-
-			// query distance for public distance
-			var xhrTransit = new XMLHttpRequest();
-			xhrTransit.addEventListener("load", processRequest("transit"));
-			xhrTransit.open('GET', requestURL(origins, destinations, "transit"), true);
-			xhrTransit.send();
+			chrome.runtime.sendMessage({url: requestURL(origins, destinations, "transit")}, response => {
+				insertDistanceInDocument(response.json, "transit");
+			});
 		}
 	}
 }
@@ -109,6 +105,7 @@ function setIdInHTMLCollection(elements) {
 
 function processRequest(mode) {
 	return function() {
+		console.log(this.responseText)
 	    var response = JSON.parse(this.responseText);	
 		insertDistanceInDocument(response, mode);
 	}
@@ -195,7 +192,6 @@ function requestURL(origins, destinations, mode) {
 	}
 	requestURL += "&origins=" + addressesToString(origins) + "&destinations=" + addressesToString(destinations) + "&key=" + apiKey;
 
-	console.log(requestURL);
 	return requestURL;
 }
 
