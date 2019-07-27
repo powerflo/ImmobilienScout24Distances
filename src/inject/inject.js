@@ -173,19 +173,13 @@ function requestURL(origins, destinations, mode) {
     // origins, destinations: addresses as string array
     // mode: bicycling or transit
 
-    const apiKey = 'AIzaSyAWX9chkt6F6w4aoNqgWdPsINgaiuhIX_k';
     var requestURL;
-    requestURL = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&mode=' + mode;
+    requestURL =
+        'https://europe-west1-analog-period-208515.cloudfunctions.net/IS24DistanceServer/?units=metric&mode=' + mode;
     if (mode === 'transit') {
         requestURL += '&departure_time=' + today8amInSeconds().toString();
     }
-    requestURL +=
-        '&origins=' +
-        addressesToString(origins) +
-        '&destinations=' +
-        addressesToString(destinations) +
-        '&key=' +
-        apiKey;
+    requestURL += '&origins=' + addressesToString(origins) + '&destinations=' + addressesToString(destinations);
 
     return requestURL;
 }

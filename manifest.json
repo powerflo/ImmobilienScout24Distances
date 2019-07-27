@@ -1,6 +1,6 @@
 {
     "name": "Distances for ImmobilienScout24",
-    "version": "0.4",
+    "version": "0.5",
     "manifest_version": 2,
     "description": "Show distances and travel times to user-defined locations on ImmobilienScout24.de",
     "short_name": "ImmobilienScout24Distances",
@@ -26,7 +26,7 @@
     },
     "permissions": [
         "https://www.immobilienscout24.de/*",
-        "https://maps.googleapis.com/maps/api/distancematrix/*",
+        "https://europe-west1-analog-period-208515.cloudfunctions.net/*",
         "webNavigation",
         "storage"
     ]
