@@ -29,3 +29,4 @@ Feel free to open an issue or write a message!
 * 0.2: prototype published on chrome web store
 * 0.3: Improved popup for address entry
 * 0.4: Use background script for http request
+* 0.5: Remove google maps api key from extension and send requests to own backend server
