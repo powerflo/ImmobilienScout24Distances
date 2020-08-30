@@ -21,7 +21,7 @@ and install the extension as usual.
 
 ## Authors
 
-* @fanaz
+* @powerflo
 
 Feel free to open an issue or write a message!
 
