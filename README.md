@@ -1,3 +1,5 @@
+# Note: I stopped the project because the cost of the Google Distance Matrix API was too high.
+
 # ImmobilienScout24Distances
 Chrome extension for displaying distances and travel times to user-defined locations on ImmobilienScout24.de.
 Distances and travel times are calculated with Google Maps for bicycle (short distances), car (long distances) or public transport.
